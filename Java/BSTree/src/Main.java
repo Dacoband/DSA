@@ -7,67 +7,108 @@ class Main {
 
     public static void main(String args[]) throws Exception {
         MyTree t = new MyTree();
-        t.load();
+        t.load(); // Load các giá trị mẫu vào cây
         int choice;
         Scanner sca = new Scanner(System.in);
-        System.out.println();
-        System.out.println(" 1. Test f1 - compute height");
-        System.out.println(" 2. Test f2 - count nodes");
-        System.out.println(" 3. Test f3 - count leaf nodes");
-        System.out.println(" 4. Test f4 - compute sum of nodes ");
-        System.out.println(" 5. Test f5 - Pre-Order ");
-        System.out.println(" 6. Test f6 - In-Order ");
-        System.out.println(" 7. Test f7 - Post-Order ");
-        System.out.println(" 8. Test f8 - Search ");
-        System.out.print("    Your selection (1 -> 10): ");
-        choice = sca.nextInt();
-        sca.nextLine();
-        int r;
-        switch (choice) {
-            case 1:
-                System.out.println("Height:");
-                r = t.f1();
-                System.out.println(r);
-                break;
-            case 2:
-                System.out.println("Count nodes:");
-                r = t.f2();
-                System.out.println(r);
-                break;
-            case 3:
-                System.out.println("Count leaf nodes:");
-                r = t.f3();
-                System.out.println(r);
-                break;
-            case 4:
-                System.out.println("Sum of nodes:");
-                r = t.f4();
-                System.out.println(r);
-                break;
-            case 5:
-                System.out.println("PreOrder:");
-                t.f5();
-                break;
-            case 6:
-                System.out.println("InOrder:");
-                t.f6();
-                break;
-            case 7:
-                System.out.println("PostOrder:");
-                t.f7();
-                break;
-            case 8:
-                System.out.println("Sum of nodes:");
-                r = t.f8(10);
-                if (r == 1) {
-                    System.out.println("Yes");
-                } else {
-                    System.out.println("No");
-                }
-                break;
-            default:
-                System.out.println("Wrong selection");
-        }
-        System.out.println();
+
+        do {
+            System.out.println("\n=== AVL Tree Operations ===");
+            System.out.println("1. Compute height of the tree");
+            System.out.println("2. Count total nodes");
+            System.out.println("3. Count leaf nodes");
+            System.out.println("4. Compute sum of all node values");
+            System.out.println("5. Pre-Order traversal");
+            System.out.println("6. In-Order traversal");
+            System.out.println("7. Post-Order traversal");
+            System.out.println("8. Search for a value");
+            System.out.println("9. Insert a value");
+            System.out.println("10. Delete a value");
+            System.out.println("11. Exit");
+            System.out.print("Your selection (1 -> 11): ");
+            choice = sca.nextInt();
+
+            int r;
+            switch (choice) {
+                case 1:
+                    System.out.println("Height of the tree:");
+                    r = t.f1();
+                    System.out.println(r);
+                    break;
+
+                case 2:
+                    System.out.println("Total nodes in the tree:");
+                    r = t.f2();
+                    System.out.println(r);
+                    break;
+
+                case 3:
+                    System.out.println("Total leaf nodes in the tree:");
+                    r = t.f3();
+                    System.out.println(r);
+                    break;
+
+                case 4:
+                    System.out.println("Sum of all node values:");
+                    r = t.f4();
+                    System.out.println(r);
+                    break;
+
+                case 5:
+                    System.out.println("Pre-Order traversal:");
+                    t.f5();
+                    System.out.println(); // In một dòng trống sau khi duyệt cây
+                    break;
+
+                case 6:
+                    System.out.println("In-Order traversal:");
+                    t.f6();
+                    System.out.println(); // In một dòng trống sau khi duyệt cây
+                    break;
+
+                case 7:
+                    System.out.println("Post-Order traversal:");
+                    t.f7();
+                    System.out.println(); // In một dòng trống sau khi duyệt cây
+                    break;
+
+                case 8:
+                    System.out.print("Enter value to search: ");
+                    int searchValue = sca.nextInt();
+                    r = t.f8(searchValue);
+                    if (r == 1) {
+                        System.out.println("Value " + searchValue + " found in the tree.");
+                    } else {
+                        System.out.println("Value " + searchValue + " not found in the tree.");
+                    }
+                    break;
+
+                case 9:
+                    System.out.print("Enter value to insert: ");
+                    int insertValue = sca.nextInt();
+                    t.insert(insertValue);
+                    System.out.println("Value " + insertValue + " inserted.");
+                    break;
+
+                case 10:
+                    System.out.print("Enter value to delete: ");
+                    int deleteValue = sca.nextInt();
+                    t.delete(deleteValue);
+                    System.out.println("Value " + deleteValue + " deleted.");
+                    System.out.println("Pre-Order traversal after deletion:");
+                    t.f5();
+                    System.out.println(); // In một dòng trống sau khi duyệt cây
+                    break;
+
+                case 11:
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid selection! Please try again.");
+            }
+
+        } while (choice != 11);
+
+        sca.close(); // Đóng Scanner sau khi kết thúc chương trình
     }
 }
