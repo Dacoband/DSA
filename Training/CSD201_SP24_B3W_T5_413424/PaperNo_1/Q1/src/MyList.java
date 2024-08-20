@@ -53,22 +53,18 @@ public class MyList {
    Khong su dung tieng Viet co dau de viet ghi chu.
    Neu dung khi chay truc tiep se bao loi va nhan 0 diem
      */
-    void addLast(String xPlace, int xPrice, int xType) {
+    void addLast(String xProducer, int xWeight, int xPrice) { //f1
         //You should write here appropriate statements to complete this function.
-        Brick newBrick = new Brick(xPlace, xPrice, xType);
-
-        Node newNode = new Node(newBrick);
-
-        if (isEmpty()) {
-            head = tail = newNode;
-        } else {
-            tail.next = newNode;
-            tail = newNode;
-        }
+        //--------------------------------------------------------
         
-
+		
+		
+        //---------------------------------------------------------
     }
 
+   
+
+    //==================================================================
     //You do not need to edit this function. Your task is to complete the addLast function above only.
     void f1() throws Exception {
         clear();
@@ -94,15 +90,15 @@ public class MyList {
         }
         RandomAccessFile f = new RandomAccessFile(fname, "rw");
         ftraverse(f);
-        Brick x, y, z;
-        x = new Brick("X", 1, 2);
-        y = new Brick("Y", 2, 3);
-        z = new Brick("Z", 3, 4);
+        Node v = new Node(new Laptop("V", 8, 9));
+        Node w = new Node(new Laptop("W", 6, 7));
         //------------------------------------------------------------------------------------
         /*You must keep statements pre-given in this function.
-       Your task is to insert statements here, just after this comment,
-       to complete the question in the exam paper.*/
+        Your task is to insert statements here, just after this comment,
+        to complete the question in the exam paper.*/
 
+       
+	   
         //------------------------------------------------------------------------------------
         ftraverse(f);
         f.close();
@@ -121,8 +117,10 @@ public class MyList {
         ftraverse(f);
         //------------------------------------------------------------------------------------
         /*You must keep statements pre-given in this function.
-       Your task is to insert statements here, just after this comment,
-       to complete the question in the exam paper.*/
+        Your task is to insert statements here, just after this comment,
+        to complete the question in the exam paper.*/
+
+
 
         //------------------------------------------------------------------------------------
         ftraverse(f);
@@ -140,10 +138,41 @@ public class MyList {
         }
         RandomAccessFile f = new RandomAccessFile(fname, "rw");
         ftraverse(f);
+        int result=0;
         //------------------------------------------------------------------------------------
         /*You must keep statements pre-given in this function.
-       Your task is to insert statements here, just after this comment,
-       to complete the question in the exam paper.*/
+        Your task is to insert statements here, just after this comment,
+        to complete the question in the exam paper.*/
+        
+        // hint: you should create a function named "countNode()",  
+        // then just call "result = this.countNode()" to complete this requirement 
+        
+        
+		
+		
+        //------------------------------------------------------------------------------------
+        f.writeBytes(result + "");
+        f.close();
+    }
+
+//==================================================================
+    void f5() throws Exception {
+        clear();
+        loadData(17);
+        String fname = "f5.txt";
+        File g123 = new File(fname);
+        if (g123.exists()) {
+            g123.delete();
+        }
+        RandomAccessFile f = new RandomAccessFile(fname, "rw");
+        ftraverse(f);
+        //------------------------------------------------------------------------------------
+        /*You must keep statements pre-given in this function.
+        Your task is to insert statements here, just after this comment,
+        to complete the question in the exam paper.*/
+       
+	   
+	   
 
         //------------------------------------------------------------------------------------
         ftraverse(f);
