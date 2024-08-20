@@ -97,3 +97,22 @@ class MyTree {
         tree.inorder(tree.root); // In ra cây sau khi xóa
     }
 }
+
+// Hàm in mảng
+public static void printArray(int[] arr) {
+    for (int num : arr) {
+        System.out.print(num + " ");
+    }
+    System.out.println();
+}
+
+public static void main(String[] args) {
+    int[] arr = {64, 34, 25, 12, 22, 11, 90};
+    System.out.println("Mảng ban đầu:");
+    printArray(arr);
+
+    bubbleSort(arr);
+
+    System.out.println("Mảng sau khi sắp xếp:");
+    printArray(arr);
+}
