@@ -33,30 +33,25 @@ public class BubbleSortExample {
         System.out.println("Mảng ban đầu:");
         printArray(arr);
 
-        // Lấy bộ nhớ ban đầu
-        Runtime runtime = Runtime.getRuntime();
-        runtime.gc(); // Gọi garbage collector để lấy thông số chính xác hơn
-        long startMemory = runtime.totalMemory() - runtime.freeMemory();
         long startTime = System.currentTimeMillis();
 
-        // Sử dụng Bubble Sort (hoặc thay bằng Arrays.sort(arr); để so sánh)
+        // Use a more efficient sorting algorithm
+        // Sort tối ưu
+        //Arrays.sort(arr);
         bubbleSort(arr);
 
         long endTime = System.currentTimeMillis();
-        long endMemory = runtime.totalMemory() - runtime.freeMemory();
         long duration = endTime - startTime;
-        long memoryUsed = endMemory - startMemory;
 
         System.out.println("Mảng sau khi sắp xếp:");
         printArray(arr);
 
         System.out.println("Thời gian sắp xếp: " + duration + " milliseconds");
-        System.out.println("Dung lượng bộ nhớ sử dụng: " + memoryUsed / (1024 * 1024) + " MB");
     }
 
-    // Hàm in mảng (giới hạn số lượng phần tử in ra)
+    // Utility method to print array (you may want to print only a small part to avoid too much output)
     public static void printArray(int[] arr) {
-        for (int i = 0; i < Math.min(arr.length, 100); i++) { // Chỉ in 100 phần tử đầu tiên
+        for (int i = 0; i < Math.min(arr.length, 2000000); i++) { // Print only the first 100 elements
             System.out.print(arr[i] + " ");
         }
         System.out.println();

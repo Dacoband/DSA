@@ -56,13 +56,20 @@ public class MyList {
     void addLast(String xProducer, int xWeight, int xPrice) { //f1
         //You should write here appropriate statements to complete this function.
         //--------------------------------------------------------
-        
-		
-		
-        //---------------------------------------------------------
-    }
+        if (xWeight > 3 && xPrice > 3) {
 
-   
+            Laptop newLaptop = new Laptop(xProducer, xWeight, xPrice);
+            Node newNode = new Node(newLaptop);
+
+            if (isEmpty()) {
+                head = tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+            //---------------------------------------------------------
+        }
+    }
 
     //==================================================================
     //You do not need to edit this function. Your task is to complete the addLast function above only.
@@ -96,9 +103,12 @@ public class MyList {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-
-       
-	   
+        v.next = head;
+        head = v;
+        
+        tail.next = w;
+        tail = w ;
+        //Thêm đầu và cuối 
         //------------------------------------------------------------------------------------
         ftraverse(f);
         f.close();
@@ -119,8 +129,38 @@ public class MyList {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-
-
+        
+        //Xóa node có giá trị lớn nhất
+        Node current = head;
+        Node previous = null;
+        Node maxWeightNode = null ;
+        Node maxWeightPrevNode = null ;
+        int maxWeight = Integer.MIN_VALUE;
+        while(current != null){
+            Laptop currentLaptop = current.info;
+            if (currentLaptop.weight > maxWeight) {
+                maxWeight = currentLaptop.weight;
+                maxWeightNode = current;
+                maxWeightPrevNode = previous;
+            }
+            previous = current ;
+            current = current.next;
+        }
+        
+        if (maxWeightNode != null) {
+            if (maxWeightPrevNode == null) {
+                head = maxWeightNode.next;
+                if (head == null) {
+                    tail = null;
+                }
+            } else {
+                maxWeightPrevNode.next = maxWeightNode.next;
+                if (maxWeightNode == tail) {
+                    tail = maxWeightPrevNode;
+                }
+            }
+        }
+        
 
         //------------------------------------------------------------------------------------
         ftraverse(f);
@@ -138,18 +178,23 @@ public class MyList {
         }
         RandomAccessFile f = new RandomAccessFile(fname, "rw");
         ftraverse(f);
-        int result=0;
+        int result = 0;
         //------------------------------------------------------------------------------------
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
         
+        //Đếm count laptop
+        int count = 0 ;
+        Node current = head;
+        while(current != null){
+            count++;
+            current = current.next;
+        }
+        result = count;
+
         // hint: you should create a function named "countNode()",  
         // then just call "result = this.countNode()" to complete this requirement 
-        
-        
-		
-		
         //------------------------------------------------------------------------------------
         f.writeBytes(result + "");
         f.close();
@@ -170,13 +215,38 @@ public class MyList {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-       
-	   
-	   
-
+        if (head != null) { //Xóa 2 nốt đầu tiên 
+            head = head.next;
+            if (head != null) {
+                head = head.next;
+            }
+        }
+        sortListByWeight();
         //------------------------------------------------------------------------------------
         ftraverse(f);
         f.close();
+    }
+    
+    void sortListByWeight(){
+        if (head == null) {
+            return;
+        }
+        boolean sorted;
+        do {            
+            sorted = true;
+            Node current = head;
+            Node nextNode = current.next;
+            while (nextNode != null) {                
+                if (current.info.weight >  nextNode.info.weight) {
+                    Laptop temp =  current.info;
+                    current.info = nextNode.info;
+                    nextNode.info = temp;
+                    sorted = false;
+                }
+                current = nextNode;
+                nextNode = current.next;
+            }
+        } while (!sorted);
     }
 
 }
