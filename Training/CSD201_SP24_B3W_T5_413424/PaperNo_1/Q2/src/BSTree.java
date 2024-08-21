@@ -93,14 +93,31 @@ public class BSTree {
 //===========================================================================
 //(2)===YOU CAN EDIT OR EVEN ADD NEW FUNCTIONS IN THE FOLLOWING PART========
 //===========================================================================
+   
+    Node insertRec(Node p, String xPlace, int xWeight, int xColor) {
+        if (p == null) {
+            return new Node(new Cat(xPlace, xWeight, xColor));
+        }
+        if (xWeight == p.info.weight) {
+            return p; // Do not insert duplicate weights
+        }
+        if (xWeight < p.info.weight) {
+            p.left = insertRec(p.left, xPlace, xWeight, xColor);
+        } else {
+            p.right = insertRec(p.right, xPlace, xWeight, xColor);
+        }
+        return p;
+    }
+
     void insert(String xPlace, int xWeight, int xColor) {
-		//---------------------------------------
-		/*You must keep statements pre-given in this function.
+        //---------------------------------------
+        /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-		
-		
-		
+        if (xPlace.charAt(0) == 'N') {
+            return;
+        }  
+            root = insertRec(root, xPlace, xWeight, xColor);
         //--------------------------------------- 
     }
 
@@ -122,6 +139,16 @@ public class BSTree {
     }
 
 //=============================================================
+    void preOrderLeft(Node p, RandomAccessFile f) throws Exception{
+        if (p == null) {
+            return;
+        }
+        if (p.info.color != 4) {
+            fvisit(p, f);
+        }
+        preOrderLeft(p.left, f);
+        preOrderLeft(p.right, f);
+    }
     void f2() throws Exception {
         clear();
         loadData(5);
@@ -137,14 +164,23 @@ public class BSTree {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-
-       
-
+        if (root != null && root.left != null) {
+            preOrderLeft(root.left, f);
+        }
         //------------------------------------------------------------------------------------
         f.writeBytes("\r\n");
         f.close();
     }
 //=============================================================
+    
+    void decesdingOrder(Node p, RandomAccessFile f) throws Exception{
+        if (p == null) {
+            return;
+        }
+        decesdingOrder(p.right, f);
+        fvisit(p, f);
+        decesdingOrder(p.left, f);
+    }
 
     void f3() throws Exception {
         clear();
@@ -159,16 +195,23 @@ public class BSTree {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-
-        
-		
-
+        decesdingOrder(root, f);
         //------------------------------------------------------------------------------------
         f.writeBytes("\r\n");
         f.close();
     }
 
 //=============================================================
+    void preOrderLeafNode(Node p, RandomAccessFile f) throws Exception{
+        if (p == null) {
+            return;
+        }
+        if (p.left == null && p.right == null && p.info.color < 7 ) {
+            fvisit(p, f);
+        }
+        preOrderLeafNode(p.left, f);
+        preOrderLeafNode(p.right, f);
+    }
     void f4() throws Exception {
         clear();
         loadData(13);
@@ -184,16 +227,23 @@ public class BSTree {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-
-       
-	   
-
+        preOrderLeafNode(root, f);
         //------------------------------------------------------------------------------------
         f.writeBytes("\r\n");
         f.close();
     }
 //=============================================================
 
+    int countInternalNode(Node p){
+        if (p == null) {
+            return 0;
+        }
+        if (p.left == null && p.right == null) {
+            return 0;
+        }
+        return 1 + countInternalNode(p.left) + countInternalNode(p.right);
+    }
+    
     void f5() throws Exception {
         clear();
         loadData(17);
@@ -210,12 +260,9 @@ public class BSTree {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-        
+        result = countInternalNode(root);
         // hint: you should create a function named "countNode()",  
         // then just call "result = this.countNode()" to complete this requirement 
-        
-        
-        
         //------------------------------------------------------------------------------------
         f.writeBytes(result + "\r\n");
         f.close();
