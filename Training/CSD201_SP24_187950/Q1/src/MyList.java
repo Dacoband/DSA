@@ -56,16 +56,23 @@ public class MyList {
     void addLast(String xPlace, int xWeight, int xColor) { //f1
         //You should write here appropriate statements to complete this function.
         //--------------------------------------------------------
-        
-		
-		
-		
-		
+        Bike xBike = new Bike(xPlace, xWeight, xColor);
+        Node xNode = new Node(xBike);
+        if (xWeight < 0) {
+            return;
+        }
+        if (isEmpty()) {
+            head = tail = xNode;
+        } else {
+            tail.next = xNode;
+            tail = xNode;
+        }
         //---------------------------------------------------------
     }
+
     //==================================================================
     //You do not need to edit this function. Your task is to complete 
-	//the addLast function above only.
+    //the addLast function above only.
     void f1() throws Exception {
         clear();
         loadData(1);
@@ -94,13 +101,8 @@ public class MyList {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
+        head = head.next.next.next;
 
-       
-	   
-	   
-	   
-	   
-	   
         //------------------------------------------------------------------------------------
         ftraverse(f);
         f.close();
@@ -121,14 +123,25 @@ public class MyList {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
+        
+        //Di chuyển phần tử thứ 3 về cuối
+        if (head == null || head.next == null || head.next.next == null) {
+            return;
+        }
+        Node prev = head;
+        Node current = head.next;
+        Node third = current.next; // có thể chỉnh ở đây để muốn di chuyển element nào 
 
-       
-	   
-	   
-	   
-	   
-	   
-        //------------------------------------------------------------------------------------
+        if (third.next != null) {
+            current.next = third.next;
+        } else 
+        {
+            current.next = null;
+        }
+        tail.next = third;
+        tail = third;
+        third.next = null;
+//------------------------------------------------------------------------------------
         ftraverse(f);
         f.close();
     }
@@ -148,18 +161,50 @@ public class MyList {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-
         
-		
-		
-		
-		
+        // đếm những Node có xColor > 0
+        int result = 0;
+        result = CountColor(0);
+        f.writeBytes(result + "");
 
         //------------------------------------------------------------------------------------
         f.close();
     }
+    int CountColor(int value){
+        int count = 0;
+        Node current = head;
+        while (current != null) {            
+            if (current.info.color > value ) {
+                count++;
+            }
+            current = current.next;
+        }
+        return count;
+    }
 
 //==================================================================
+    
+    void sortByWeight(){
+        if (isEmpty()) {
+            return;
+        }
+        boolean sorted;
+        do {            
+            sorted = true;
+            Node current = head;
+            Node nextNode = current.next;
+            while (nextNode != null) {                
+                if (current.info.weight <  nextNode.info.weight) {
+                    Bike temp =  current.info;
+                    current.info = nextNode.info;
+                    nextNode.info = temp;
+                    sorted = false;
+                }
+                current = nextNode;
+                nextNode = current.next;
+            }
+        } while (!sorted);
+    }
     void f5() throws Exception {
         clear();
         loadData(17);
@@ -175,12 +220,11 @@ public class MyList {
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
         
-		
-		
-		
-		
-		
-
+        //Xóa nốt đầu và sort weight từ lớn tới nhỏ
+        if (head != null) {
+            head = head.next;
+        }
+        sortByWeight();
         //------------------------------------------------------------------------------------
         ftraverse(f);
         f.close();
