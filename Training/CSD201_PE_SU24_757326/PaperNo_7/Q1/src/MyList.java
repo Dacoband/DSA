@@ -59,16 +59,13 @@ public class MyList {
             return;
         }
         Brick newBrick = new Brick(xPlace, xPrice, xType);
-
-        Node newNode = new Node(newBrick);
-
-        if (isEmpty()) {
+        Node newNode = new Node(newBrick, null);
+        if (head == null) {
             head = tail = newNode;
         } else {
             tail.next = newNode;
-            tail = newNode;
         }
-
+        tail = newNode;
     }
 
     //You do not need to edit this function. Your task is to complete the addLast function above only.
@@ -104,61 +101,32 @@ public class MyList {
         /*You must keep statements pre-given in this function.
        Your task is to insert statements here, just after this comment,
        to complete the question in the exam paper.*/
-        Node nodeX = new Node(x);
-        nodeX.next = head.next;
-        head.next = nodeX;
-
-        Node nodeY = new Node(y);
-        nodeY.next = nodeX.next;
-        nodeX.next = nodeY;
-
-        Node nodeZ = new Node(z);
-        Node p = head;
-        for (int i = 0; i < 4; i++) {
-            p = p.next;
-        }
-        nodeZ.next = p.next;
-        p.next = nodeZ;
-
-        // Update the size variable manually, if necessary
-        int size = 0;
-        Node temp = head;
-        while (temp != null) {
-            size++;
-            temp = temp.next;
-        }
-
-        //---------------------------------------1---------------------------------------------
+        addInPosition(1, x);
+        addInPosition(2, y);
+        addInPosition(5, z);
+        //------------------------------------------------------------------------------------
         ftraverse(f);
         f.close();
     }
 
-//==================================================================
-    void swapEandG(Node current) {
-        if (current == null) {
+    void addInPosition(int p, Brick newBrick) {
+        Node current = head;
+        Node newNode = new Node(newBrick);
+        if (p == 0) {
+            newNode.next = head;
+            head = newNode;
             return;
         }
 
-        Node eNode = findNode(current, "E");
-        Node gNode = findNode(current, "G");
-
-        if (eNode != null && gNode != null) {
-            Brick temp = eNode.info;
-            eNode.info = gNode.info;
-            gNode.info = temp;
+        while (current != null && p > 1) {
+            current = current.next;
+            p--;
         }
+        newNode.next = current.next;
+        current.next = newNode;
     }
 
-    Node findNode(Node current, String place) {
-        if (current == null) {
-            return null;
-        }
-        if (current.info.place.equals(place)) {
-            return current;
-        }
-        return findNode(current.next, place);
-    }
-
+//==================================================================
     void f3() throws Exception {
         clear();
         loadData(9);
@@ -173,30 +141,50 @@ public class MyList {
         /*You must keep statements pre-given in this function.
        Your task is to insert statements here, just after this comment,
        to complete the question in the exam paper.*/
-        swapEandG(head);
+        Node ENode = findNode("E");
+        Node GNode = findNode("G");
+        if (ENode != null && GNode != null) {
+            Brick temp = ENode.info;
+            ENode.info = GNode.info;
+            GNode.info = temp;
+        }
+
         //------------------------------------------------------------------------------------
         ftraverse(f);
         f.close();
     }
 
+    Node findNode(String xplace) {
+        Node current = head;
+        while (current != null) {
+            if (current.info.place.equals(xplace)) {
+                return current;
+            }
+            current = current.next;
+        }
+        return null;
+    }
+
+    void sort() {
+        Node INode = findNode("I");
+        Node pi, pj;
+        Brick x;
+        pi = head;
+        while (pi != null && pi.next != INode) {
+            pj = pi.next;
+            while (pj != null && pj != INode) {
+                if (pj.info.price < pi.info.price) {
+                    x = pi.info;
+                    pi.info = pj.info;
+                    pj.info = x;
+                }
+                pj = pj.next;
+            }
+            pi = pi.next;
+        }
+    }
+
 //==================================================================
-    Node sortBeforeNOde(Brick x,Node first, Node last) {
-        if (first == null || first == last) {
-            return first;
-        }
-        first.next = sortBeforeNOde(first.next, last);
-        if (first.next != last && first.info.price > first.next.info.price) {
-            first = swapNodes(first, first.next);
-        }
-        return first;
-    }
-
-    Node swapNodes(Node node1, Node node2) {
-        node1.next = node2.next;
-        node2.next = node1;
-        return node2;
-    }
-
     void f4() throws Exception {
         clear();
         loadData(13);
@@ -211,10 +199,7 @@ public class MyList {
         /*You must keep statements pre-given in this function.
        Your task is to insert statements here, just after this comment,
        to complete the question in the exam paper.*/
-        Node p = findNode(head, "I");
-        if (p != null) {
-            head = sortBeforeNOde(head, p);
-        }
+        sort();
         //------------------------------------------------------------------------------------
         ftraverse(f);
         f.close();
