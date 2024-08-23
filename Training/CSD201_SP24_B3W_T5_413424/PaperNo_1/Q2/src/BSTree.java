@@ -203,7 +203,7 @@ public class BSTree {
 
 //=============================================================
     void preOrderLeafNode(Node p, RandomAccessFile f) throws Exception{
-        if (p == null) {
+        if (p == null) { // lấy ra những node lá
             return;
         }
         if (p.left == null && p.right == null && p.info.color < 7 ) {

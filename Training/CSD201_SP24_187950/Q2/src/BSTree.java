@@ -93,17 +93,30 @@ public class BSTree {
 //===========================================================================
 //(2)===YOU CAN EDIT OR EVEN ADD NEW FUNCTIONS IN THE FOLLOWING PART========
 //===========================================================================
+    Node insertRec(Node p, String xPlace, int xWeight, int xColor) {
+        if (p == null) {
+            return new Node(new Bird(xPlace, xWeight, xColor));
+        }
+        if (xWeight == p.info.weight) {
+            return p;
+        }
+        if (xWeight < p.info.weight) {
+            p.left = insertRec(p.left, xPlace, xWeight, xColor);
+        } else {
+            p.right = insertRec(p.right, xPlace, xWeight, xColor);
+        }
+        return p;
+    }
+
     void insert(String xPlace, int xWeight, int xColor) {
         //You should insert here statements to complete this function
         //---------------------------------------
-		
-		
-		
-		
-		
-		
-		
-		//---------------------------------------        
+        if (xPlace.charAt(0) == 'X') {
+            return;
+        }
+        root = insertRec(root, xPlace, xWeight, xColor);
+
+        //---------------------------------------        
     }
 
 //Do not edit this function. 
@@ -125,6 +138,18 @@ public class BSTree {
     }
 
 //=============================================================
+    void preOrder2(Node p, RandomAccessFile f) throws Exception {
+        if (p == null) {
+            return;
+        }
+        if (p.info.color > 4) {
+            fvisit(p, f);
+        }
+       
+        preOrder2(p.left, f);
+        preOrder2(p.right, f);
+    }
+    
     void f2() throws Exception {
         clear();
         loadData(5);
@@ -140,19 +165,21 @@ public class BSTree {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-
-        
-		
-		
-		
-		
-
+        preOrder2(root.left, f);
         //------------------------------------------------------------------------------------
         f.writeBytes("\r\n");
         f.close();
     }
 //=============================================================
-
+    void decesdingOrder(Node p, RandomAccessFile f) throws Exception{
+        if (p == null) {
+            return;
+        }
+        decesdingOrder(p.right, f);
+        fvisit(p, f);
+        decesdingOrder(p.left, f);
+    } // Sắp xếp weight giảm dần
+    
     void f3() throws Exception {
         clear();
         loadData(9);
@@ -166,20 +193,24 @@ public class BSTree {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-
-        
-		
-		
-		
-		
-
+        decesdingOrder(root, f);
+                
         //------------------------------------------------------------------------------------
         f.writeBytes("\r\n");
         f.close();
     }
 
 //=============================================================
-
+     void preOrderLeafNode(Node p, RandomAccessFile f) throws Exception{
+        if (p == null) {
+            return;
+        }
+        if (p.left != null || p.right != null) {
+            fvisit(p, f);
+        }
+        preOrderLeafNode(p.left, f);
+        preOrderLeafNode(p.right, f); // Internal leaf node lấy ra những node không phải lá 
+    }
     void f4() throws Exception {
         clear();
         loadData(13);
@@ -195,14 +226,7 @@ public class BSTree {
         /*You must keep statements pre-given in this function.
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
-
-        
-		
-		
-		
-		
-		
-
+        preOrderLeafNode(root, f);
         //------------------------------------------------------------------------------------
         f.writeBytes("\r\n");
         f.close();
@@ -225,11 +249,6 @@ public class BSTree {
         Your task is to insert statements here, just after this comment,
         to complete the question in the exam paper.*/
 
-        
-		
-		
-		
-		
         //------------------------------------------------------------------------------------
         f.close();
     }

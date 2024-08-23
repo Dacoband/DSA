@@ -154,7 +154,7 @@ class BSTree {
             g123.delete();
         }
         RandomAccessFile f = new RandomAccessFile(fname, "rw");
-        preOrder(root, f);
+        preOrder2(root, f);
         f.writeBytes("\r\n");
         //------------------------------------------------------------------------------------
         /*You must keep statements pre-given in this function.
